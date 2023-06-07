@@ -72,7 +72,7 @@
                                         <tbody>
                                            <?php foreach($attendancelist as $value): ?>
                                             <tr>
-                                                <?php $OVT=$value->Hours-8 ?>
+                                                <?php $OVT=$value->Hours;round($OVT);?>
                                                 <td><mark><?php echo $value->name; ?></mark></td>
                                                 <td><?php echo $value->emp_id; ?></td>
                                                 <?php if (date('l', strtotime($value->atten_date))=='Saturday' OR date('l', strtotime($value->atten_date))=='Sunday') {?>
@@ -84,12 +84,12 @@
                                                 <td><?php echo date('m/d/Y',strtotime($value->atten_date)) ; ?></td>
                                                 <td><?php echo $value->signin_time; ?></td>
                                                 <td><?php echo $value->signout_time; ?></td>
-                                                <td><?php echo $value->Hours; ?></td>
+                                                <td><?php echo round($value->Hours); ?></td>                                              
 
                                                 <?php if ($OVT<1) {?>
                                                 <td>0</td>
                                                 <?php } else {?>                                            
-                                                <td><?php echo $OVT; ?></td>
+                                                <td><?php echo round($OVT); ?></td>
                                                 <?php }?>
 
                                                 <?php if ($OVT >= 1 AND date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
@@ -107,12 +107,33 @@
                                                         <?php } ?>
                                                    
                                                 <?php }else{ ?> 
-                                                    <td>0</td>
+                                                    <td><?php $Q=$OVT*2; echo $Q;?></td>  
                                                 <?php } ?>
 
+                                                <?php if (date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
+                                                        <!-- $OVT-1 *2  -->
+                                                        <?php if ( $OVT <= 8) {?>
+                                                            <td>0</td>                                                    
+                                                        <?php }else{ ?>   
+                                                            <td><?php $Q=1*3; echo $Q;?></td>   
+                                                        <?php } ?>
+                                                   
+                                                <?php }else{ ?> 
+                                                    <td>0</td>
+                                                <?php } ?>
                                                 
-                                                <td>0</td>
-                                                <td>0</td>
+                                                
+                                                <?php if (date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
+                                                        <!-- $OVT-1 *2  -->
+                                                        <?php if ( $OVT <= 8) {?>
+                                                            <td>0</td>                                                    
+                                                        <?php }else{ ?>   
+                                                            <td><?php $Q=($OVT-8)*4; echo $Q;?></td>   
+                                                        <?php } ?>
+                                                   
+                                                <?php }else{ ?> 
+                                                    <td>0</td>
+                                                <?php } ?>
                                                 <td class="jsgrid-align-center ">
                                                 <?php if($value->signout_time == '00:00:00') { ?>
                                                     <a href="Save_Attendance?A=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-danger waves-effect waves-light" data-value="Approve" >Sign Out</a><br>                           
