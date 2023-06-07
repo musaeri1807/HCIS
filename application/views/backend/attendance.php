@@ -49,6 +49,10 @@
                                                 <th>Sign Out</th>
                                                 <th>Working Hour</th>
                                                 <th>Overtime</th>
+                                                <th>1,5 =>1</th>
+                                                <th>2 <7</th>
+                                                <th>3</th>
+                                                <th>4</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -79,11 +83,16 @@
                                                 <td><?php echo $value->signin_time; ?></td>
                                                 <td><?php echo $value->signout_time; ?></td>
                                                 <td><?php echo $value->Hours; ?></td>
-                                                <?php if ($value->Hours-8<1) {?>
+                                                <?php if ($OVT=$value->Hours-8<1) {?>
                                                 <td>0</td>
                                                 <?php } else {?>                                            
-                                                <td><?php echo $value->Hours-8; ?></td>
+                                                <td><?php echo $OVT=$value->Hours-8; ?></td>
                                                 <?php }?>
+                                                <?php if ($OVT) {}?>
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>0</td>
                                                 <td class="jsgrid-align-center ">
                                                 <?php if($value->signout_time == '00:00:00') { ?>
                                                     <a href="Save_Attendance?A=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-danger waves-effect waves-light" data-value="Approve" >Sign Out</a><br>                           
