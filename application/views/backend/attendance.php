@@ -100,8 +100,8 @@
 
                                                 <?php if (date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
                                                         <!-- $OVT-1 *2  -->
-                                                        <?php if ( 0 <= 7) {?>
-                                                        <td><?php $Q=(0-1)*2; echo $Q;?></td>                                                     
+                                                        <?php if ( $OVT <= 7) {?>
+                                                        <td><?php $Q=($OVT-1)*2; echo $Q;?></td>                                                     
                                                         <?php }else{ ?>   
                                                         <td><?php $Q= 7*2; echo $Q;?></td>
                                                         <?php } ?>
