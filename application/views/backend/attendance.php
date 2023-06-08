@@ -49,10 +49,10 @@
                                                 <th>Sign Out</th>
                                                 <th>Working Hour</th>
                                                 <th>Overtime</th>
-                                                <th>1,5 =>1</th>
-                                                <th>2 <7</th>
-                                                <th>3</th>
-                                                <th>4</th>
+                                                <th> x 1,5</th>
+                                                <th> x 2</th>
+                                                <th> x 3</th>
+                                                <th> x 4</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
