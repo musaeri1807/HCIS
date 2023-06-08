@@ -72,7 +72,7 @@
                                         <tbody>
                                            <?php foreach($attendancelist as $value): ?>
                                             <tr>
-                                                <?php $OVT=$value->Hours;round($OVT);?>
+                                                <?php $OVTT=$value->Hours;$OVT=round($OVTT);?>
                                                 <td><mark><?php echo $value->name; ?></mark></td>
                                                 <td><?php echo $value->emp_id; ?></td>
                                                 <?php if (date('l', strtotime($value->atten_date))=='Saturday' OR date('l', strtotime($value->atten_date))=='Sunday') {?>
@@ -84,20 +84,20 @@
                                                 <td><?php echo date('m/d/Y',strtotime($value->atten_date)) ; ?></td>
                                                 <td><?php echo $value->signin_time; ?></td>
                                                 <td><?php echo $value->signout_time; ?></td>
-                                                <td><?php echo round($value->Hours); ?></td>                                              
+                                                <td><?php echo $value->Hours; ?></td>                                              
 
                                                 <?php if ($OVT<1) {?>
                                                 <td>0</td>
                                                 <?php } else {?>                                            
-                                                <td><?php echo round($OVT); ?></td>
+                                                <td><?php echo $OVT; ?></td>
                                                 <?php }?>
-
+                                                <!-- 1.5 -->
                                                 <?php if ($OVT >= 1 AND date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
                                                    <td><?php $Q=1*1.5; echo $Q;?></td> 
                                                 <?php }else{ ?> 
                                                     <td>0</td>
                                                 <?php } ?>
-
+                                                <!-- 2 -->
                                                 <?php if (date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
                                                         <!-- $OVT-1 *2  -->
                                                         <?php if ( $OVT <= 7) {?>
@@ -107,9 +107,9 @@
                                                         <?php } ?>
                                                    
                                                 <?php }else{ ?> 
-                                                    <td><?php $Q=$OVT*2; echo $Q;?></td>  
+                                                    <td><?php $Q=7*2; echo $Q;?></td>  
                                                 <?php } ?>
-
+                                                <!-- 3 -->
                                                 <?php if (date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
                                                         <!-- $OVT-1 *2  -->
                                                         <?php if ( $OVT <= 8) {?>
@@ -119,20 +119,28 @@
                                                         <?php } ?>
                                                    
                                                 <?php }else{ ?> 
-                                                    <td>0</td>
+                                                        <?php if ( $OVT <= 8) {?>
+                                                            <td>0</td>                                                    
+                                                        <?php }else{ ?>   
+                                                            <td><?php $Q=1*3; echo $Q;?></td>   
+                                                        <?php } ?>
                                                 <?php } ?>
                                                 
-                                                
+                                                <!-- 4 -->
                                                 <?php if (date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
                                                         <!-- $OVT-1 *2  -->
-                                                        <?php if ( $OVT <= 8) {?>
+                                                        <?php if ( $OVT <=9) {?>
                                                             <td>0</td>                                                    
                                                         <?php }else{ ?>   
                                                             <td><?php $Q=($OVT-8)*4; echo $Q;?></td>   
                                                         <?php } ?>
                                                    
                                                 <?php }else{ ?> 
-                                                    <td>0</td>
+                                                    <?php if ( $OVT <= 8) {?>
+                                                            <td>0</td>                                                    
+                                                    <?php }else{ ?>   
+                                                            <td><?php $Q=($OVT-8)*4; echo round($Q);?></td>   
+                                                    <?php } ?>
                                                 <?php } ?>
                                                 <td class="jsgrid-align-center ">
                                                 <?php if($value->signout_time == '00:00:00') { ?>
