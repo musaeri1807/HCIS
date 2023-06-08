@@ -87,7 +87,7 @@ class Attendance_model extends CI_Model
     }
     public function getAllAttendanceByID($empid)
     {
-      $sql = "SELECT `attendance`.`id`, `emp_id`, `atten_date`, `signin_time`, `signout_time`,  TRUNCATE(ABS(( TIME_TO_SEC( TIMEDIFF( `signin_time`, `signout_time` ) ) )/3600), 1) AS Hours,
+      $sql = "SELECT `attendance`.`id`, `emp_id`, `atten_date`, `signin_time`, `signout_time`, `attendance`.*, TRUNCATE(ABS(( TIME_TO_SEC( TIMEDIFF( `signin_time`, `signout_time` ) ) )/3600), 1) AS Hours,TRUNCATE(ABS(( TIME_TO_SEC( TIMEDIFF( `start_overtime`, `end_overtime` ) ) )/3600), 1) AS OT,
         CONCAT(`first_name`, ' ', `last_name`) AS name
        FROM `attendance`
         LEFT JOIN `employee` ON `attendance`.`emp_id` = `employee`.`em_code`
@@ -98,7 +98,7 @@ class Attendance_model extends CI_Model
     }
     public function getAllAttendance()
     {
-      $sql = "SELECT `attendance`.`id`, `emp_id`, `atten_date`, `signin_time`, `signout_time`,  TRUNCATE(ABS(( TIME_TO_SEC( TIMEDIFF( `signin_time`, `signout_time` ) ) )/3600), 1) AS Hours,
+      $sql = "SELECT `attendance`.`id`, `emp_id`, `atten_date`, `signin_time`, `signout_time`, `attendance`.*, TRUNCATE(ABS(( TIME_TO_SEC( TIMEDIFF( `signin_time`, `signout_time` ) ) )/3600), 1) AS Hours,TRUNCATE(ABS(( TIME_TO_SEC( TIMEDIFF( `start_overtime`, `end_overtime` ) ) )/3600), 1) AS OT,
         CONCAT(`first_name`, ' ', `last_name`) AS name
        FROM `attendance`
         LEFT JOIN `employee` ON `attendance`.`emp_id` = `employee`.`em_code`

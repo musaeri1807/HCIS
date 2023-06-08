@@ -20,7 +20,7 @@
                 <div class="row m-b-10"> 
                     <div class="col-12">
                         <?php if($this->session->userdata('user_type')=='EMPLOYEE'){ ?>
-                        
+                        <button type="button" class="btn btn-info"><i class="fa fa-plus"></i><a href="<?php echo base_url(); ?>attendance/Save_Overtime" class="text-white"><i class="" aria-hidden="true"></i> Add Overtime </a></button>
                         <button type="button" class="btn btn-info"><i class="fa fa-plus"></i><a href="<?php echo base_url(); ?>attendance/Attendance_Report" class="text-white"><i class="" aria-hidden="true"></i> Attendance Report </a></button>
                         <?php }else{?>
                         <button type="button" class="btn btn-info"><i class="fa fa-plus"></i><a href="<?php echo base_url(); ?>attendance/Save_Attendance" class="text-white"><i class="" aria-hidden="true"></i> Add Attendance </a></button>
@@ -42,12 +42,16 @@
                                         <thead>
                                             <tr>
                                                 <th>Employee Name</th>
-                                                <th>PIN</th>
+                                                <th>Note</th>
                                                 <th>Day </th>
                                                 <th>Date </th>
-                                                <th>Sign In</th>
-                                                <th>Sign Out</th>
-                                                <th>Working Hour</th>
+                                                <th>Sign In Ov</th>
+                                                <th>Sign Out Ov</th>                                               
+                                                <th>Overtime</th>
+                                                <th> x 1,5</th>
+                                                <th> x 2</th>
+                                                <th> x 3</th>
+                                                <th> x 4</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -66,10 +70,11 @@
                                         <?php $N="N";$Y="Y";?>
                                         <tbody>
                                            <?php foreach($attendancelist as $value): ?>
-                                            <tr>                                                
+                                            <?php if($value->note !==NULL) { ?>                                            
+                                            <tr>
+                                                <?php $OVTT=$value->OT;$OVT=round($OVTT);?>
                                                 <td><mark><?php echo $value->name; ?></mark></td>
-                                                <td><?php echo $value->emp_id; ?></td>
-                                                
+                                                <td><?php echo $value->note; ?></td>
                                                 <?php if (date('l', strtotime($value->atten_date))=='Saturday' OR date('l', strtotime($value->atten_date))=='Sunday') {?>
                                                     <td class="btn-sm btn-danger"><?php echo date('l', strtotime($value->atten_date)) ;?></td>
                                                 <?php } else {?>
@@ -77,16 +82,71 @@
                                                 <?php }?>
                                                 
                                                 <td><?php echo date('m/d/Y',strtotime($value->atten_date)) ; ?></td>
-                                                <td><?php echo $value->signin_time; ?></td>
-                                                <td><?php echo $value->signout_time; ?></td>
-                                                <td><?php echo $value->Hours; ?></td>
-                                                <td class="jsgrid-align-center ">
-                                                <?php if($value->signout_time == '00:00:00') { ?>
-                                                    <a href="Save_Attendance?A=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-danger waves-effect waves-light" data-value="Approve" >Sign Out</a><br>                           
+                                                <td><?php echo $value->start_overtime; ?></td>
+                                                <td><?php echo $value->signout_time; ?></td>                                                                                          
+
+                                                <?php if ($OVT<1) {?>
+                                                <td>0</td>
+                                                <?php } else {?>                                            
+                                                <td><?php echo $OVT; ?></td>
+                                                <?php }?>
+                                                <!-- 1.5 -->
+                                                <?php if ($OVT >= 1 AND date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
+                                                   <td><?php $Q=1*1.5; echo $Q;?></td> 
+                                                <?php }else{ ?> 
+                                                    <td>0</td>
                                                 <?php } ?>
-                                                    <a href="Save_Attendance?A=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-primary waves-effect waves-light" data-value="Approve" ><i class="fa fa-pencil-square-o"></i></a>
+                                                <!-- 2 -->
+                                                <?php if (date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
+                                                        <!-- $OVT-1 *2  -->
+                                                        <?php if ( $OVT < 1) {?>
+                                                        <td>0</td>                                                     
+                                                        <?php }else{ ?>   
+                                                        <td><?php $Q= ($OVT-1)*2; echo $Q;?></td>
+                                                        <?php } ?>
+                                                   
+                                                <?php }else{ ?> 
+                                                    <td><?php $Q=7*2; echo $Q;?></td>  
+                                                <?php } ?>
+                                                <!-- 3 -->
+                                                <?php if (date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
+                                                        <!-- $OVT-1 *2  -->
+                                                        <!-- <?php if ( $OVT <= 8) {?>
+                                                            <td>0</td>                                                    
+                                                        <?php }else{ ?>   
+                                                            <td><?php $Q=1*3; echo $Q;?></td>   
+                                                        <?php } ?> -->
+                                                    <td>0</td>     
+                                                   
+                                                <?php }else{ ?> 
+                                                        <?php if ( $OVT <= 8) {?>
+                                                            <td>0</td>                                                    
+                                                        <?php }else{ ?>   
+                                                            <td><?php $Q=1*3; echo $Q;?></td>   
+                                                        <?php } ?>
+                                                <?php } ?>
+                                                
+                                                <!-- 4 -->
+                                                <?php if (date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
+                                                        <!-- $OVT-1 *2  -->
+                                                        <!-- <?php if ( $OVT <=9) {?>
+                                                            <td>0</td>                                                    
+                                                        <?php }else{ ?>   
+                                                            <td><?php $Q=($OVT-8)*4; echo $Q;?></td>   
+                                                        <?php } ?> -->
+                                                    <td>0</td>  
+                                                <?php }else{ ?> 
+                                                    <?php if ( $OVT <= 8) {?>
+                                                            <td>0</td>                                                    
+                                                    <?php }else{ ?>   
+                                                            <td><?php $Q=($OVT-8)*4; echo round($Q);?></td>   
+                                                    <?php } ?>
+                                                <?php } ?>
+                                                <td class="jsgrid-align-center ">                                             
+                                                    <a href="Save_Attendance?A=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-primary waves-effect waves-light" data-value="Approve" ><i class="fa fa-pencil-square-o"></i>Toha</a>
                                                 </td>
                                             </tr>
+                                            <?php } ?>
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
