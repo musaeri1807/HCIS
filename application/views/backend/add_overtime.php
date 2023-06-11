@@ -22,10 +22,10 @@
                     </div>
                 </div>  
                 <div class="row">
-                    <div class="col-6">
-                        <div class="card card-outline-info">
+                <div class="col-6">
+                    <div class="card card-outline-info">
                             <div class="card-header">
-                                <h4 class="m-b-0 text-white"> Attendance </h4>
+                                <h4 class="m-b-0 text-white"> Add Overtime </h4>
                             </div>
                             <div class="card-body">
                                     <form method="post" action="Add_Overtime" id="holidayform" enctype="multipart/form-data">
@@ -83,7 +83,70 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-6">
+                        <div class="card card-outline-info">
+                            <div class="card-header">
+                                <h4 class="m-b-0 text-white"> Attendance List </h4>
+                            </div>
+                            <div class="card-body">
+                                   
+                                   <table id="attendance123" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th>Day </th>
+                                                <th>Date </th>
+                                                <th>Sign In</th>
+                                                <th>Sign Out</th>
+                                                <th>Working Hour</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                
+                                                <th>Day </th>
+                                                <th>Date </th>
+                                                <th>Sign In</th>
+                                                <th>Sign Out</th>
+                                                <th>Working Hour</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                        <?php $N="N";$Y="Y";?>
+                                        <tbody>
+                                           <?php foreach($attendancelist as $value): ?>
+                                            <tr>                                                
+                                                <!-- <td><mark><?php echo $value->name; ?></mark></td>
+                                                <td><?php echo $value->emp_id; ?></td> -->
+                                                
+                                                <?php if (date('l', strtotime($value->atten_date))=='Saturday' OR date('l', strtotime($value->atten_date))=='Sunday') {?>
+                                                    <td class="btn-sm btn-danger"><?php echo date('l', strtotime($value->atten_date)) ;?></td>
+                                                <?php } else {?>
+                                                    <td class="btn-sm btn-success"><?php echo date('l', strtotime($value->atten_date)) ;?></td>
+                                                <?php }?>
+                                                
+                                                <td><?php echo date('m/d/Y',strtotime($value->atten_date)) ; ?></td>
+                                                <td><?php echo $value->signin_time; ?></td>
+                                                <td><?php echo $value->signout_time; ?></td>
+                                                <td><?php echo $value->Hours; ?></td>
+                                                <td class="jsgrid-align-center ">
+                                                <?php if($value->signout_time == '00:00:00') { ?>
+                                                    <a href="Save_Attendance?A=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-danger waves-effect waves-light" data-value="Approve" >Sign Out</a><br>                           
+                                                <?php } ?>
+                                                    <a href="Save_Attendance?A=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-primary waves-effect waves-light" data-value="Approve" ><i class="fa fa-pencil-square-o"></i></a>
+                                                </td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>                                
+
+                            </div>
+                        </div>
+                    </div>
+                    asas
+                </div> 
+                <!-- Row -->
                         <div class="modal fade" id="holysmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content ">
@@ -174,3 +237,12 @@ $(document).ready(function () {
 });
 </script>                              
 <?php $this->load->view('backend/footer'); ?>
+<script>
+    $('#attendance123').DataTable({
+        "aaSorting": [[2,'desc']],
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+</script>
