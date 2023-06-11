@@ -17,7 +17,7 @@
 
                 <div class="row m-b-10"> 
                     <div class="col-12">
-                        <button type="button" class="btn btn-info"><i class="fa fa-plus"></i><a href="<?php echo base_url(); ?>attendance/Attendance" class="text-white"><i class="" aria-hidden="true"></i>  Attendance List</a></button>
+                        <button type="button" class="btn btn-info"><i class="fa fa-plus"></i><a href="<?php echo base_url(); ?>attendance/Overtime" class="text-white"><i class="" aria-hidden="true"></i>  Overtime List</a></button>
                         <!-- <button type="button" class="btn btn-primary"><i class="fa fa-bars"></i><a href="<?php echo base_url(); ?>leave/Application" class="text-white"><i class="" aria-hidden="true"></i>  Leave Application</a></button> -->
                     </div>
                 </div>  
@@ -28,7 +28,7 @@
                                 <h4 class="m-b-0 text-white"> Attendance </h4>
                             </div>
                             <div class="card-body">
-                                    <form method="post" action="Add_Attendance" id="holidayform" enctype="multipart/form-data">
+                                    <form method="post" action="Add_Overtime" id="holidayform" enctype="multipart/form-data">
                                     <div class="modal-body">
 			                                    <div class="form-group">
 			                                        <label>Employee PIN</label>
@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="modal-footer">
                                     <input type="hidden" name="id" value="<?php if(!empty($attval->id)){ echo  $attval->id;} ?>" class="form-control" id="recipient-name1">                                       
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
                                         <button type="submit" id="attendanceUpdate" class="btn btn-success">Submit</button>
                                     </div>
                                     </form>
