@@ -77,18 +77,37 @@ class Attendance extends CI_Controller
 
     public function Save_Overtime()
     {
-        if ($this->session->userdata('user_login_access') != False) {
-            $data['employee'] = $this->employee_model->emselect();
-            if ($this->session->userdata('user_type')=='EMPLOYEE') {
-                $id=$this->session->userdata('em_code');
-                $data['attendancelist'] = $this->attendance_model->getAllAttendanceByID($id);
-                $this->load->view('backend/add_overtime', $data);
-            } else {   
-                $data['attendancelist'] = $this->attendance_model->getAllAttendance();
-                $this->load->view('backend/add_overtime', $data);
-            }
+        
+            
+           
             #$data['attendancelist'] = $this->attendance_model->em_attendance();
             // $this->load->view('backend/add_overtime', $data);
+     
+
+        if ($this->session->userdata('user_login_access') != False) {
+            $data['employee'] = $this->employee_model->emselect();
+            $id               = $this->input->get('O');
+            if (!empty($id)) {
+                $data['attval'] = $this->attendance_model->em_attendanceFor($id);
+                if ($this->session->userdata('user_type')=='EMPLOYEE') {
+                    $id=$this->session->userdata('em_code');
+                    $data['attendancelist'] = $this->attendance_model->getAllAttendanceByID($id);
+                    $this->load->view('backend/add_overtime', $data);
+                } else {   
+                    $data['attendancelist'] = $this->attendance_model->getAllAttendance();
+                    $this->load->view('backend/add_overtime', $data);
+                }
+            }else{
+            #$data['attendancelist'] = $this->attendance_model->em_attendance();
+                if ($this->session->userdata('user_type')=='EMPLOYEE') {
+                    $id=$this->session->userdata('em_code');
+                    $data['attendancelist'] = $this->attendance_model->getAllAttendanceByID($id);
+                    $this->load->view('backend/add_overtime', $data);
+                } else {   
+                    $data['attendancelist'] = $this->attendance_model->getAllAttendance();
+                    $this->load->view('backend/add_overtime', $data);
+                }
+            }
         } else {
             redirect(base_url(), 'refresh');
         }

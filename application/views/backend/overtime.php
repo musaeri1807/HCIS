@@ -73,22 +73,25 @@
                                             <?php if($value->note !==NULL) { ?>                                            
                                             <tr>
                                                 <?php $OVTT=$value->OT;$OVT=round($OVTT);?>
-                                                <td><mark><?php echo $value->name; ?></mark></td>
-                                                <td><?php echo $value->note; ?></td>
+
                                                 <?php if (date('l', strtotime($value->atten_date))=='Saturday' OR date('l', strtotime($value->atten_date))=='Sunday') {?>
+                                                    <td class="btn-sm btn-danger"><mark><?php echo $value->name; ?></mark></td>
+                                                    <td class="btn-sm btn-danger"><?php echo $value->note; ?></td>
                                                     <td class="btn-sm btn-danger"><?php echo date('l', strtotime($value->atten_date)) ;?></td>
                                                 <?php } else {?>
+                                                    <td class="btn-sm btn-success"><mark><?php echo $value->name; ?></mark></td>
+                                                    <td class="btn-sm btn-success"><?php echo $value->note; ?></td>
                                                     <td class="btn-sm btn-success"><?php echo date('l', strtotime($value->atten_date)) ;?></td>
                                                 <?php }?>
                                                 
                                                 <td><?php echo date('m/d/Y',strtotime($value->atten_date)) ; ?></td>
                                                 <td><?php echo $value->start_overtime; ?></td>
-                                                <td><?php echo $value->signout_time; ?></td>                                                                                          
-
+                                                <td><?php echo $value->end_overtime; ?></td>                                                                                          
+                                                <!-- Overtime -->
                                                 <?php if ($OVT<1) {?>
                                                 <td>0</td>
                                                 <?php } else {?>                                            
-                                                <td><?php echo $OVT; ?></td>
+                                                <td><?php echo $OVTT=$value->OT." => "; echo $OVT; ?></td>
                                                 <?php }?>
                                                 <!-- 1.5 -->
                                                 <?php if ($OVT >= 1 AND date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>
@@ -106,7 +109,12 @@
                                                         <?php } ?>
                                                    
                                                 <?php }else{ ?> 
-                                                    <td><?php $Q=7*2; echo $Q;?></td>  
+                                                    
+                                                    <?php if ( $OVT <= 7) {?>
+                                                        <td><?php $Q= $OVT*2; echo $Q;?></td>                                                    
+                                                        <?php }else{ ?>   
+                                                        <td><?php $Q=7*2; echo $Q;?></td> 
+                                                        <?php } ?> 
                                                 <?php } ?>
                                                 <!-- 3 -->
                                                 <?php if (date('l', strtotime($value->atten_date))!=='Saturday' AND date('l', strtotime($value->atten_date))!=='Sunday') { ?>

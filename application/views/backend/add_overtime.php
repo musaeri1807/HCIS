@@ -132,9 +132,9 @@
                                                 <td><?php echo $value->Hours; ?></td>
                                                 <td class="jsgrid-align-center ">
                                                 <?php if($value->signout_time == '00:00:00') { ?>
-                                                    <a href="Save_Attendance?A=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-danger waves-effect waves-light" data-value="Approve" >Sign Out</a><br>                           
+                                                    <a href="Save_Overtime?O=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-danger waves-effect waves-light" data-value="Approve" >Sign Out</a><br>                           
                                                 <?php } ?>
-                                                    <a href="Save_Attendance?A=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-primary waves-effect waves-light" data-value="Approve" ><i class="fa fa-pencil-square-o"></i></a>
+                                                    <a href="Save_Overtime?O=<?php echo $value->id; ?>" title="Edit" class="btn btn-sm btn-primary waves-effect waves-light" data-value="Approve" ><i class="fa fa-pencil-square-o"></i></a>
                                                 </td>
                                             </tr>
                                             <?php endforeach; ?>
